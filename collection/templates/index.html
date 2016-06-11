@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}
+    {{ block.super }} - Home
+{% endblock title %}
+
+{% block content %}
+    <h1>SLC Coffee Shops</h1>
+    <p>My name is {{ name|truncatechars:10 }}</p>
+{% endblock content %}

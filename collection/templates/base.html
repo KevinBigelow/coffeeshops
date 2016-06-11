@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/vendor/skeleton/normalize.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/vendor/skeleton/skeleton.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+        <title>
+            {% block title %}SLC Coffee Shops{% endblock %}
+        </title>
+        {% block head %}{% endblock head %}
+    </head>
+    <body>
+        <header>
+            <p class="u-pull-left">SLC Coffee Shops</p>
+            <nav class="u-pull-right">
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="container md-buffer--top md-buffer--bottom">
+            <div class="row">
+                {% block content %}{% endblock content %}
+            </div>
+        </main>
+        <footer>{% block footer %}{% endblock footer %}</footer>
+    </body>
+</html>
