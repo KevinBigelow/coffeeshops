@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^signup/$',
         TemplateView.as_view(template_name='signup.html'),
         name='signup'),
+    url(r'^businesses/(?P<slug>[-\w]+)/$', views.business_detail, name='business_detail'),
     url(r'^admin/', admin.site.urls),
 ]

@@ -1,14 +1,14 @@
 from django.contrib import admin
 
 # Import models
-from collection.models import business
+from collection.models import Business
 
 # Automated slug creation
-class businessAdmin(admin.ModelAdmin):
-    model = business
+class BusinessAdmin(admin.ModelAdmin):
+    model = Business
     list_display = ('name', 'description',)
     prepopulated_fields = {'slug': ('name',)}
 
 # Register model
-admin.site.register(business, businessAdmin)
+admin.site.register(Business, BusinessAdmin)
 

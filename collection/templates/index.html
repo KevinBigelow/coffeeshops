@@ -10,5 +10,6 @@
     {% for business in business %}
         <h4>{{ business.name }}</h4>
         <p>{{ business.description }}</p>
+        <a href="{% url 'business_detail' slug=business.slug %}" class="button button-primary">View {{ business.name }}</a>
     {% endfor %}
 {% endblock content %}
