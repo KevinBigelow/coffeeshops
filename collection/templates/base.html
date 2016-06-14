@@ -12,11 +12,16 @@
     </head>
     <body>
         <header>
-            <p class="u-pull-left">SLC Coffee Shops</p>
+            <p class="u-pull-left"><a href="{% url 'home' %}">SLC Coffee Shops</a></p>
             <nav class="u-pull-right">
                 <ul>
                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'auth_login' %}">Login</a></li>
+                        <li><a href="{% url 'registration_register' %}">Register</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </header>
