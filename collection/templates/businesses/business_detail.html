@@ -8,5 +8,7 @@
 {% block content %}
     <h4>{{ business.name }}</h4>
     <p>{{ business.description }}</p>
-    <a href="{% url 'edit_business' slug=business.slug %}" class="button button-primary">Edit</a>
+    {% if user == business.user %}
+        <a href="{% url 'edit_business' slug=business.slug %}" class="button button-primary">Edit</a>
+    {% endif %}
 {% endblock content %}

@@ -1,3 +1,6 @@
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect
 from collection.models import Business
 from collection.forms import BusinessForm
@@ -17,8 +20,13 @@ def business_detail(request, slug):
         'business': business,
     })
 
+@login_required
 def edit_business(request, slug):
     business = Business.objects.get(slug=slug)
+    # Make sure the logged in user is the owner of the business
+    if business.user != request.user:
+        raise Http404
+
     # Set the form we're using
     form_class = BusinessForm
     # If we're coming to this view from a submitted form
@@ -37,5 +45,29 @@ def edit_business(request, slug):
     # And render the template
     return render(request, 'businesses/edit_business.html', {
         'business': business,
+        'form': form,
+    })
+
+def create_business(request):
+    form_class = BusinessForm
+    # If we're coming from a submitted form do this
+    if request.method == 'POST':
+        # Grab the data from the submitted form and apply to the form
+        form = form_class(request.POST)
+        if form.is_valid():
+            # Create an instance but do not save yet
+            business = form.save(commit=False)
+            # Set the additional details
+            business.user = request.user
+            business.slug = slugify(business.name)
+            # Save the object
+            business.save()
+            # Redirect to our newly created business
+            return redirect('business_detail', slug=business.slug)
+    # Otherwise just create the form
+    else:
+        form = form_class()
+
+    return render(request, 'businesses/create_business.html', {
         'form': form,
     })
